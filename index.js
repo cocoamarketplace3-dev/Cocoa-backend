@@ -14,6 +14,10 @@ app.use(cors());
 const JWT_SECRET = process.env.JWT_SECRET ;
 const server = http.createServer(app);
 const io = new Server(server, { cors: { origin: '*', methods: ['GET', 'POST'] } });
+app.get('/', (req, res) => {
+  res.status(200).json({ status: 'success', message: 'Cocoa Backend API is live' });
+});
+
 
 // --- AUTH MIDDLEWARE ---
 const authenticateToken = (req, res, next) => {
