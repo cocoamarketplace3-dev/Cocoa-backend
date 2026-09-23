@@ -1,15 +1,13 @@
-require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const http = require('http');
-const { Server } = require('socket.io');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
 const db = require('./db');
 
 const app = express();
+
 app.use(express.json());
 app.use(cors());
+
+// --- CORE ROUTES (MUST BE BEFORE OTHER ROUTERS / WILDCARDS) ---
 app.get('/', (req, res) => {
   res.json({ status: 'ok', message: 'Cocoa backend is running 🍫' });
 });
@@ -17,6 +15,7 @@ app.get('/', (req, res) => {
 app.get('/health', (req, res) => {
   res.json({ status: 'healthy' });
 });
+
 
 
 const JWT_SECRET = process.env.JWT_SECRET ;
