@@ -77,7 +77,7 @@ app.post('/api/auth/register', async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
     
     const result = await db.query(
-      `INSERT INTO users (name, email, phone, password, role) VALUES ($1, $2, $3, $4, $5) RETURNING id, name, email, role`,
+      `INSERT INTO users (name, email, phone, password_hash, role) VALUES ($1, $2, $3, $4, $5) RETURNING id, name, email, role`,
       [name, email, phone, hashedPassword, role]
     );
     
@@ -98,7 +98,7 @@ app.post('/api/auth/login', async (req, res) => {
     }
 
     const user = userResult.rows[0];
-    const validPassword = await bcrypt.compare(password, user.password);
+    const validPassword = await bcrypt.compare(password, user.password_hash);
     
     if (!validPassword) {
       return res.status(400).json({ error: "Invalid email or password" });
