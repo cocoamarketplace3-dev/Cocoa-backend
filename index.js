@@ -8,9 +8,13 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-// --- CORE ROUTES (MUST BE BEFORE OTHER ROUTERS / WILDCARDS) ---
+// --- CORE ROUTES ---
 app.get('/', (req, res) => {
-  res.json({ status: 'ok', message: 'Cocoa backend is running 🍫' });
+  res.json({ status: 'success', message: 'Cocoa Backend API is live' });
+});
+
+app.get('/health', (req, res) => {
+  res.json({ status: 'healthy' });
 });
 
 app.get('/health', (req, res) => {
