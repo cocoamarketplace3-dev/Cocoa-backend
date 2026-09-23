@@ -112,6 +112,26 @@ app.post('/api/auth/login', async (req, res) => {
   }
 });
 
+// --- PROTECTED LISTINGS ROUTES ---
+app.post('/api/listings', authenticateToken, async (req, res) => {
+  try {
+    const { title, description, price, quantity, location } = req.body;
+    const seller_id = req.user.id; // Extracted safely from the verified JWT token
+
+    const result = await db.query(
+      `INSERT INTO listings (seller_id, title, description, price, quantity, location, status) 
+       VALUES ($1, $2, $3, $4, $5, $6, 'active') 
+       RETURNING *`,
+      [seller_id, title, description, price, quantity, location]
+    );
+
+    res.status(201).json({ success: true, listing: result.rows[0] });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to create listing", details: err.message });
+  }
+});
+
 // --- SOCKET.IO REAL-TIME CONNECTION ---
 io.on('connection', (socket) => {
   console.log(`Client connected: ${socket.id}`);
