@@ -17,14 +17,10 @@ app.get('/health', (req, res) => {
   res.json({ status: 'healthy' });
 });
 
-app.get('/health', (req, res) => {
-  res.json({ status: 'healthy' });
-});
-
 
 
 const JWT_SECRET = process.env.JWT_SECRET ;
-const server = http.createServer(app);
+const server = http.createServer(server);
 const io = new Server(server, { cors: { origin: '*', methods: ['GET', 'POST'] } });
 
 
