@@ -10,9 +10,10 @@ const db = require('./db');
 const app = express();
 app.use(express.json());
 app.use(cors());
-const app = express();
-app.use(express.json());
-app.use(cors());
+app.get('/', (req, res) => {
+  res.status(200).json({ status: 'success', message: 'Cocoa Backend API is live' });
+});
+
 
 
 const JWT_SECRET = process.env.JWT_SECRET ;
