@@ -20,7 +20,7 @@ app.get('/health', (req, res) => {
 
 
 const JWT_SECRET = process.env.JWT_SECRET ;
-const server = http.createServer(server);
+const server = http.createServer(app);
 const io = new Server(server, { cors: { origin: '*', methods: ['GET', 'POST'] } });
 
 
